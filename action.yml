@@ -1,0 +1,51 @@
+name: "Get Liferay Info"
+description: >
+  Get current edition, major version and product name from your workspace.
+  Also fetch latest minor version and product name available for your current edition and major version.
+author: "lgdd"
+branding:
+  icon: "info"
+  color: "blue"
+
+inputs:
+  workspace-directory:
+    description: >
+      Path to your workspace if different from root directory (e.g. './liferay').
+      It will be use in this actions steps for the 'working-directory' directive.
+    required: false
+    default: .
+
+runs:
+  using: composite
+  steps:
+    - name: Get Liferay Info
+      shell: bash
+      working-directory: ${{ inputs.workspace-directory }}
+      run: |
+        echo "LFR_CURRENT_PRODUCT_NAME=$(cat gradle.properties | grep liferay.workspace.product= | cut -d '=' -f2)" >> $GITHUB_ENV
+    - name: Fetch Latest Liferay Update
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { LFR_CURRENT_PRODUCT_NAME } = process.env;
+          const currentProductSplit = LFR_CURRENT_PRODUCT_NAME.split('-');
+          const currentEdition = currentProductSplit[0]
+          const currentVersion = currentProductSplit[1]
+          const currentVersionNoDot = currentVersion.replaceAll('.', '')
+          const liferayProductInfoUrl =
+            `https://github.com/lgdd/liferay-product-info/raw/main/${currentEdition}_${currentVersion}_product_info.json`;
+
+          fetch(liferayProductInfoUrl, { method: 'Get' })
+            .then((res) => res.json())
+            .then((json) => {
+              const latestProduct = json[json.length - 1];
+              const latestProductSplit = latestProduct.name.split('-');
+              const latestMinorVersion = latestProductSplit[2]
+
+              core.setOutput("current-product-name", LFR_CURRENT_PRODUCT_NAME);
+              core.setOutput("current-edition", currentEdition);
+              core.setOutput("current-major-version", currentVersion);
+              core.setOutput("current-minor-version", currentVersion);
+              core.setOutput("latest-product-name", latestProduct.name);
+              core.setOutput("latest-minor-version", latestMinorVersion);
+            });
