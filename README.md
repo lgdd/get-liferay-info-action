@@ -19,6 +19,7 @@ steps:
       echo ${{ steps.get-liferay-info.outputs.current-minor-version }}
       echo ${{ steps.get-liferay-info.outputs.latest-product-name }}
       echo ${{ steps.get-liferay-info.outputs.latest-minor-version }}
+      echo ${{ steps.get-liferay-info.outputs.latest-product-version-name }}
 ```
 
 In this example we just print the available outputs from this action. Of course you can use those outputs as you want in your following steps.
