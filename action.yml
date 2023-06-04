@@ -47,5 +47,6 @@ runs:
               core.setOutput("current-major-version", currentVersion);
               core.setOutput("current-minor-version", currentVersion);
               core.setOutput("latest-product-name", latestProduct.name);
+              core.setOutput("latest-product-version-name", latestProduct.liferayProductVersion);
               core.setOutput("latest-minor-version", latestMinorVersion);
             });
