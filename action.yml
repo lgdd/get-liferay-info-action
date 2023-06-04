@@ -33,7 +33,7 @@ runs:
           const currentVersion = currentProductSplit[1]
           const currentVersionNoDot = currentVersion.replaceAll('.', '')
           const liferayProductInfoUrl =
-            `https://github.com/lgdd/liferay-product-info/raw/main/${currentEdition}_${currentVersion}_product_info.json`;
+            `https://github.com/lgdd/liferay-product-info/raw/main/${currentEdition}_${currentVersionNoDot}_product_info.json`;
 
           fetch(liferayProductInfoUrl, { method: 'Get' })
             .then((res) => res.json())
