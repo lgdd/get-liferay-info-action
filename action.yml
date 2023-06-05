@@ -15,15 +15,39 @@ inputs:
     required: false
     default: .
 
+outputs:
+  current-product-name:
+    description: "Current value for liferay.workspace.product in gradle properties (e.g. portal-7.4-ga78)"
+    value: ${{ steps.get-liferay-info.outputs.current-product-name }}
+  current-edition:
+    description: "Current Liferay Edition: dxp or portal."
+    value: ${{ steps.get-liferay-info.outputs.current-edition }}
+  current-major-version:
+    description: "Current Liferay DXP/Portal major version (e.g. 7.4)"
+    value: ${{ steps.get-liferay-info.outputs.current-major-version }}
+  current-minor-version:
+    description: "Current Liferay DXP/Portal minor version (e.g. ga78)"
+    value: ${{ steps.get-liferay-info.outputs.current-minor-version }}
+  latest-product-name:
+    description: "Latest value for liferay.workspace.product in gradle properties (e.g. portal-7.4-ga79)"
+    value: ${{ steps.get-liferay-info.outputs.latest-product-name }}
+  latest-product-version-name:
+    description: "Latest name of the version for your current edition of Liferay (e.g. 'Portal 7.4 GA79')"
+    value: ${{ steps.get-liferay-info.outputs.latest-product-version-name }}
+  latest-minor-version:
+    description: "Latest Liferay DXP/Portal minor version (e.g. ga79)"
+    value: ${{ steps.get-liferay-info.outputs.latest-minor-version }}
+
 runs:
   using: composite
   steps:
-    - name: Get Liferay Info
+    - name: Get Current Product Name
       shell: bash
       working-directory: ${{ inputs.workspace-directory }}
       run: |
         echo "LFR_CURRENT_PRODUCT_NAME=$(cat gradle.properties | grep liferay.workspace.product= | cut -d '=' -f2)" >> $GITHUB_ENV
-    - name: Fetch Latest Liferay Update
+    - name: Get Liferay Info
+      id: get-liferay-info
       uses: actions/github-script@v6
       with:
         script: |
