@@ -1,7 +1,6 @@
 name: "Get Liferay Info"
 description: >
-  Get current edition, major version and product name from your workspace.
-  Also fetch latest minor version and product name available for your current edition and major version.
+  Get Liferay DXP/Portal product info from your version and the latest available.
 author: "lgdd"
 branding:
   icon: "info"
