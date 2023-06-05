@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/lgdd/get-liferay-info-action/compare/v1.0.0...v1.0.1) (2023-06-05)
+
+
+### Bug Fixes
+
+* description too long for marketplace ([81a9171](https://github.com/lgdd/get-liferay-info-action/commit/81a9171ff5ae8c38fd180b68005f4bef5ba58dd0))
+
 ## 1.0.0 (2023-06-05)
 
 
