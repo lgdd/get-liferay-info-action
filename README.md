@@ -7,11 +7,9 @@ Also fetch latest minor version and product name available for your current edit
 
 ```yaml
 steps:
-  - name: Checkout
-    uses: actions/checkout@v3
-  - name: Get Liferay Info
+  - uses: actions/checkout@v3
+  - uses: lgdd/get-liferay-info-action@v1
     id: get-liferay-info
-    uses: lgdd/get-liferay-info-action@v1
   - run: |
       echo ${{ steps.get-liferay-info.outputs.current-product-name }}
       echo ${{ steps.get-liferay-info.outputs.current-edition }}
